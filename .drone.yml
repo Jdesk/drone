@@ -1,15 +1,9 @@
-build:
-  commands:
-    - docker pull golang
-  environment:
-    - GOPATH=/drone
-  commands:
-    - apt-get update 1> /dev/null 2> /dev/null
-    - apt-get -y install libsqlite3-dev sqlite3 1> /dev/null 2> /dev/null
-    - go get golang.org/x/tools/cmd/vet
-    - go get golang.org/x/tools/cmd/cover
-    - make deps
-    - make test
+image: go1.3
+git:
+  path: github.com/drone/drone
+env:
+  - GOROOT=/usr/local/go
+  - PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 script:
   - sudo add-apt-repository ppa:git-core/ppa 1> /dev/null 2> /dev/null
   - sudo apt-get update 1> /dev/null 2> /dev/null
@@ -28,3 +22,21 @@ notify:
   email:
     recipients:
       - james@jurisdesk.com
+      
+    on_started: false
+    on_success: true
+    on_failure: true
+
+# new build script for 0.4 branch
+
+build:
+  image: golang:1.4.2
+  environment:
+    - GOPATH=/drone
+  commands:
+    - apt-get update 1> /dev/null 2> /dev/null
+    - apt-get -y install libsqlite3-dev sqlite3 1> /dev/null 2> /dev/null
+    - go get golang.org/x/tools/cmd/vet
+    - go get golang.org/x/tools/cmd/cover
+    - make deps
+    - make test
