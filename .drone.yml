@@ -1,5 +1,6 @@
 build:
-  image: https://hub.docker.com/_/golang/
+  commands:
+    - docker pull golang
   environment:
     - GOPATH=/drone
   commands:
