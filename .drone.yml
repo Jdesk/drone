@@ -1,5 +1,5 @@
 build:
-  image: golang
+  image: https://hub.docker.com/_/golang/
   environment:
     - GOPATH=/drone
   commands:
